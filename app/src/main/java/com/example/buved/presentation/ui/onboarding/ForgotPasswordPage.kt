@@ -45,6 +45,7 @@ fun ForgotPasswordPage(navController: NavHostController, viewModel: ForgotPasswo
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.Black)
     ) {
         Box{
             Row (
