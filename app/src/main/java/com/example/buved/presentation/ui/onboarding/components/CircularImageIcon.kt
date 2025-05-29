@@ -3,6 +3,7 @@ package com.example.buved.presentation.ui.onboarding.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
@@ -20,7 +21,8 @@ import com.example.buved.R
 fun CircularImageIcon(
     image: Int,
     imageDescription: String,
-    size: Dp = 75.dp
+    size: Dp = 75.dp,
+    onClick:() -> Unit = {}
 ){
     Image(
         painter = painterResource(image),
@@ -29,6 +31,9 @@ fun CircularImageIcon(
         modifier = Modifier
             .size(size)
             .clip(CircleShape)
+            .clickable {
+                onClick()
+            }
     )
 }
 

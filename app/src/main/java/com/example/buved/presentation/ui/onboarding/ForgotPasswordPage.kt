@@ -58,7 +58,10 @@ fun ForgotPasswordPage(navController: NavHostController, viewModel: ForgotPasswo
                 CircularImageIcon(
                     R.drawable.go_back,
                     "Go Back Icon",
-                    size = 45.dp
+                    size = 45.dp,
+                    onClick = {
+                        navController.popBackStack()
+                    }
                 )
             }
             Column(

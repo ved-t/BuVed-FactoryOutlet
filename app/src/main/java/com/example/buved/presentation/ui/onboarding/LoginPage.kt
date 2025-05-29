@@ -1,6 +1,7 @@
 package com.example.buved.presentation.ui.onboarding
 
 import android.widget.Space
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,6 +38,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -60,6 +62,7 @@ import java.security.Key
 fun LoginPage(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
 
     val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -266,17 +269,26 @@ fun LoginPage(navController: NavHostController, viewModel: LoginViewModel = hilt
             ){
                 CircularImageIcon(
                     R.drawable.face_book_logo,
-                    "Face Book Logo"
+                    "Face Book Logo",
+                    onClick = {
+                        Toast.makeText(context, "Coming Soon!", Toast.LENGTH_SHORT).show()
+                    }
                 )
 
                 CircularImageIcon(
                     R.drawable.twitter_logo,
-                    "Face Book Logo"
+                    "Face Book Logo",
+                    onClick = {
+                        Toast.makeText(context, "Coming Soon!", Toast.LENGTH_SHORT).show()
+                    }
                 )
 
                 CircularImageIcon(
                     R.drawable.apple_logo,
-                    "Face Book Logo"
+                    "Face Book Logo",
+                    onClick = {
+                        Toast.makeText(context, "Coming Soon!", Toast.LENGTH_SHORT).show()
+                    }
                 )
             }
 

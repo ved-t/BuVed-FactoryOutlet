@@ -1,5 +1,6 @@
 package com.example.buved.presentation.ui.onboarding
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -68,7 +69,10 @@ fun SignupPage(navController: NavHostController, viewModel: SignUpViewModel = hi
                 CircularImageIcon(
                     R.drawable.go_back,
                     "Go Back Icon",
-                    size = 45.dp
+                    size = 45.dp,
+                    onClick = {
+                        navController.popBackStack()
+                    }
                 )
             }
             Column(
