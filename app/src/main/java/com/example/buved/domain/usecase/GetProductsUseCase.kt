@@ -13,8 +13,8 @@ class GetProductsUseCase @Inject constructor(
 ){
 //    suspend operator fun invoke(): List<Product> = productRepository.getProducts().map { it.toDomain() }
 
-    suspend operator fun invoke(): Flow<List<Product>> = flow {
+    operator fun invoke(): Flow<List<Product>> = flow {
         emit(productRepository.getProducts().map { it.toDomain() })
     }
-
 }
+
