@@ -9,4 +9,7 @@ sealed class Destination(
     data object ForgotPasswordPage: Destination("forgot_password_page")
 
     data object HomePage: Destination("home_page")
+    data object ProductDetailPage: Destination("product_page/{productId}"){
+        fun createRoute(productId: String) = "product_page/$productId"
+    }
 }
