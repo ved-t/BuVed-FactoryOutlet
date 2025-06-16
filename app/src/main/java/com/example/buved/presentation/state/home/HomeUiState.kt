@@ -9,5 +9,7 @@ data class HomeUiState(
     val moreOptionsExpanded: Boolean = false,
 
     val list: List<Product> = emptyList(),
-    val isLoading: Boolean = true
+    val isLoading: Boolean = true,
+
+    val favouriteCount: String = "0"
 )

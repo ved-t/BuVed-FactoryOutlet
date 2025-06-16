@@ -32,8 +32,7 @@ import androidx.navigation.NavHostController
 import com.example.buved.R
 import com.example.buved.presentation.Destination
 import com.example.buved.presentation.event.onboarding.ForgotPasswordUiEvent
-import com.example.buved.presentation.event.onboarding.SignupUiEvent
-import com.example.buved.presentation.ui.onboarding.components.CircularImageIcon
+import com.example.buved.presentation.ui.components.CircularImageIcon
 import com.example.buved.presentation.viewmodel.onboarding.ForgotPasswordViewModel
 
 @Composable
@@ -72,14 +71,14 @@ fun ForgotPasswordPage(navController: NavHostController, viewModel: ForgotPasswo
                     .padding(top = 150.dp)
             ) {
                 Text(
-                    text = "Sign Up",
+                    text = "Forgot Password?",
                     fontWeight = FontWeight.Bold,
                     fontSize = 36.sp,
                     color = Color.White
                 )
 
                 Text(
-                    text = "Please sign in to get started.",
+                    text = "Please enter your email.",
                     fontWeight = FontWeight.Light,
                     fontSize = 12.sp,
                     color = Color.White

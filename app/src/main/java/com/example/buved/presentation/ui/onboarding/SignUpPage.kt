@@ -1,6 +1,5 @@
 package com.example.buved.presentation.ui.onboarding
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,11 +17,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -41,10 +38,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.buved.R
 import com.example.buved.presentation.Destination
-import com.example.buved.presentation.event.onboarding.LoginUiEvent
 import com.example.buved.presentation.event.onboarding.SignupUiEvent
-import com.example.buved.presentation.ui.onboarding.components.CircularImageIcon
-import com.example.buved.presentation.viewmodel.onboarding.LoginViewModel
+import com.example.buved.presentation.ui.components.CircularImageIcon
 import com.example.buved.presentation.viewmodel.onboarding.SignUpViewModel
 
 @Composable

@@ -45,7 +45,7 @@ fun MoreOptions(
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = type.filterType,
+                            text = if(type == FilterType.All) "All" else type.filterString,
                             fontSize = 12.sp
                         )
                     },

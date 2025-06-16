@@ -1,44 +1,41 @@
-package com.example.buved.presentation.ui.home
+package com.example.buved.presentation.ui.wishlist
 
-import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import com.example.buved.presentation.Destination
 import com.example.buved.presentation.event.home.HomeUiEvent
 import com.example.buved.presentation.event.home.NavigationEvent
+import com.example.buved.presentation.event.home.WishlistUiEvent
 import com.example.buved.presentation.ui.components.LoadingIndicator
 import com.example.buved.presentation.ui.components.MyBottomAppBar
 import com.example.buved.presentation.ui.components.MyTopAppBar
-import com.example.buved.presentation.ui.home.components.MoreOptions
 import com.example.buved.presentation.ui.home.components.ProductItem
-import com.example.buved.presentation.viewmodel.home.HomeViewModel
+import com.example.buved.presentation.ui.wishlist.components.WishlistTopAppBar
+import com.example.buved.presentation.viewmodel.wishlist.WishlistViewModel
 
 @Composable
-fun HomePage(navController: NavHostController, homeViewModel: HomeViewModel = hiltViewModel()) {
+fun WishListPage(
+    navController: NavController,
+    viewModel: WishlistViewModel = hiltViewModel()
+){
 
     LaunchedEffect(Unit) {
-        homeViewModel.navEvent.collect{event ->
+        viewModel.navEvent.collect{event ->
             when(event){
                 is NavigationEvent.Navigate -> {
                     navController.navigate(event.destination.route)
@@ -49,48 +46,31 @@ fun HomePage(navController: NavHostController, homeViewModel: HomeViewModel = hi
         }
     }
 
-    val uiState by homeViewModel.homeUiState.collectAsState()
-
     Scaffold(
         modifier = Modifier,
         topBar =  {
-            MyTopAppBar(
-                wishlistBadgeCount = uiState.favouriteCount,
-                onNavigate = {
-                    homeViewModel.onNavEvent(NavigationEvent.Navigate(Destination.WishListPage))
-                }
+            WishlistTopAppBar(
+                onPopBackStack = {viewModel.onNavEvent(NavigationEvent.PopBackStack)},
+                onNavigate = {viewModel.onNavEvent(NavigationEvent.Navigate(Destination.CartPage))}
             )
         },
         bottomBar = {
             MyBottomAppBar(
                 onNavigate = {
-                    homeViewModel.onNavEvent(NavigationEvent.Navigate(Destination.CartPage))
+                    viewModel.onNavEvent(NavigationEvent.Navigate(Destination.CartPage))
                 }
             )
         }
-    ) { innerPadding ->
+    ){innerPadding ->
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            ){
-                Text(
-                    text = uiState.filterString
-                )
+        ){
 
-                Spacer(modifier = Modifier.weight(1f))
-
-                MoreOptions()
-            }
-
+            val uiState by viewModel.uiState.collectAsState()
 
             if(!uiState.isLoading){
                 LazyVerticalGrid(
@@ -103,22 +83,10 @@ fun HomePage(navController: NavHostController, homeViewModel: HomeViewModel = hi
                     items(uiState.list){ product ->
                         ProductItem(
                             product,
-                            onFavourite = {
-                                homeViewModel.onHomeEvent(
-                                    HomeUiEvent.onProductFavourite(
-                                        product.id.toString()
-                                    )
-                                )
-                            },
-                            onRemoveFavourite = {
-                                homeViewModel.onHomeEvent(
-                                    HomeUiEvent.onProductRemoveFavourite(
-                                        product.id.toString()
-                                    )
-                                )
-                            },
+                            onFavourite = {},
+                            onRemoveFavourite = {viewModel.onEvent(WishlistUiEvent.onProductRemoveFavourite(product.id));},
                             onNavigate = {
-                                homeViewModel.onNavEvent(
+                                viewModel.onNavEvent(
                                     NavigationEvent.Navigate(Destination.ProductDetailPage(product.id.toString()))
                                 )
                             }
@@ -136,8 +104,9 @@ fun HomePage(navController: NavHostController, homeViewModel: HomeViewModel = hi
                     LoadingIndicator()
                 }
             }
+
         }
+
 
     }
 }
-

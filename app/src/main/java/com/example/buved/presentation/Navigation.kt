@@ -8,12 +8,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.buved.presentation.ui.cart.CartPage
 import com.example.buved.presentation.ui.home.HomePage
 import com.example.buved.presentation.ui.onboarding.ForgotPasswordPage
 import com.example.buved.presentation.ui.onboarding.LoginPage
 import com.example.buved.presentation.ui.onboarding.SignupPage
 import com.example.buved.presentation.ui.onboarding.StartPage
 import com.example.buved.presentation.ui.product_detail.ProductDetailScreen
+import com.example.buved.presentation.ui.wishlist.WishListPage
 
 @Composable
 fun Navigation(
@@ -37,20 +39,39 @@ fun Navigation(
         composable(Destination.SignInPage.route){
             SignupPage(navController)
         }
+
+//        Forgot Password Page
         composable(Destination.ForgotPasswordPage.route){
             ForgotPasswordPage(navController)
         }
 
+//        Home
         composable(Destination.HomePage.route){
             HomePage(navController)
         }
+
+//        Product Detail Page
         composable(
-            Destination.ProductDetailPage.route,
+            "product_page/{productId}",
             arguments = listOf(navArgument("productId"){
                 type = NavType.StringType
             })
         ){
             ProductDetailScreen(navController)
+        }
+
+//        Wishlist Page
+        composable(
+            Destination.WishListPage.route,
+        ){
+            WishListPage(navController)
+        }
+
+//        Cart Page
+        composable(
+            Destination.CartPage.route,
+        ){
+            CartPage(navController)
         }
     }
 }

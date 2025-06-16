@@ -46,6 +46,7 @@ android {
 
 dependencies {
 
+//    Room Database
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.firebase.crashlytics.ktx)
@@ -55,8 +56,6 @@ dependencies {
 
 //    View Model
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-
-
 
 //    Hilt Support
     implementation(libs.hilt.android)

@@ -13,7 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun MyBottomAppBar(){
+fun MyBottomAppBar(
+    onNavigate: () ->Unit,
+){
     BottomAppBar() {
         NavigationBarItem(
             icon = { Icon(Icons.Filled.Home, contentDescription = "Home Icon") },
@@ -23,14 +25,16 @@ fun MyBottomAppBar(){
             },
             onClick = {  }
         )
+
         NavigationBarItem(
             icon = { Icon(Icons.Outlined.ShoppingCart, contentDescription = "Cart Icon") },
             selected = false,
             label = {
                 Text("Cart")
             },
-            onClick = { },
+            onClick = onNavigate,
         )
+
         NavigationBarItem(
             icon = { Icon(Icons.Filled.Settings, contentDescription = "Settings Icon") },
             selected = false,

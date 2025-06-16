@@ -43,7 +43,8 @@ import com.example.buved.presentation.ui.components.LoadingIndicator
 fun ProductItem(
     product: Product,
     onFavourite: () -> Unit,
-    onNavigate: () -> Unit
+    onRemoveFavourite: () -> Unit,
+    onNavigate: () -> Unit,
 ){
     val context = LocalContext.current
 
@@ -77,8 +78,7 @@ fun ProductItem(
 
             IconButton(
                 onClick = {
-                    onFavourite()
-                    Log.d("uistate", product.id.toString() + product.isFavourite.toString())
+                    if(!product.isFavourite) onFavourite() else onRemoveFavourite()
                     if(!product.isFavourite) Toast.makeText(context, "Added to favourites", Toast.LENGTH_SHORT).show() else Toast.makeText(context, "Removed from favourites", Toast.LENGTH_SHORT).show()
                 },
                 modifier = Modifier
@@ -133,8 +133,6 @@ fun ProductItem(
                 }
             }
         }
-
-
     }
 }
 

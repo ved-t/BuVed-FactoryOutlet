@@ -1,4 +1,4 @@
-package com.example.buved.domain.usecase
+package com.example.buved.domain.usecase.fakestoreapi
 
 import com.example.buved.data.remote.dto.toDomain
 import com.example.buved.domain.model.Product

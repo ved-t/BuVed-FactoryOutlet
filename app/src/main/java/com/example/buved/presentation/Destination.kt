@@ -9,7 +9,14 @@ sealed class Destination(
     data object ForgotPasswordPage: Destination("forgot_password_page")
 
     data object HomePage: Destination("home_page")
-    data object ProductDetailPage: Destination("product_page/{productId}"){
-        fun createRoute(productId: String) = "product_page/$productId"
+
+    data class ProductDetailPage(val productId: String): Destination("product_page/$productId"){
+        companion object{
+            fun createRoute(productId: String) = "product_page/$productId"
+        }
     }
+
+    data object WishListPage: Destination("wishlist_page")
+
+    data object CartPage: Destination("cart_page")
 }
