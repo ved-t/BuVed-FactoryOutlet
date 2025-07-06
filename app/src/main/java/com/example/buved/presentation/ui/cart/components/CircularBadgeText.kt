@@ -26,7 +26,7 @@ fun CircularBadgeText(
         modifier = Modifier
             .size(size)
             .clip(CircleShape)
-            .background(Color.Blue)
+            .background(Color.White)
     ) {
         Text(
             text = text,
@@ -35,6 +35,5 @@ fun CircularBadgeText(
             modifier = Modifier
                 .align(Alignment.Center)
         )
-
     }
 }

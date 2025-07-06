@@ -22,6 +22,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -38,14 +39,31 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.buved.R
 import com.example.buved.presentation.Destination
+import com.example.buved.presentation.event.home.NavigationEvent
 import com.example.buved.presentation.event.onboarding.SignupUiEvent
 import com.example.buved.presentation.ui.components.CircularImageIcon
+import com.example.buved.presentation.viewmodel.NavViewModel
 import com.example.buved.presentation.viewmodel.onboarding.SignUpViewModel
 
 @Composable
 fun SignupPage(navController: NavHostController, viewModel: SignUpViewModel = hiltViewModel() ) {
 
     val uiState by viewModel.signUpUiState.collectAsState()
+
+    val navViewModel: NavViewModel = hiltViewModel()
+
+    LaunchedEffect(Unit) {
+        navViewModel.navEvent.collect{event ->
+            when(event){
+                is NavigationEvent.Navigate -> {
+                    navController.navigate(event.destination.route)
+                }
+
+                NavigationEvent.PopBackStack -> navController.popBackStack()
+            }
+        }
+    }
+
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -238,8 +256,11 @@ fun SignupPage(navController: NavHostController, viewModel: SignUpViewModel = hi
             Button(
                 modifier = Modifier
                     .fillMaxWidth(),
-                onClick ={
-                    navController.navigate(Destination.LoginPage.route)
+                onClick = {
+                    viewModel.onEvent(SignupUiEvent.onSIgnUp)
+                    if(uiState.isLoggedIn){
+                        navViewModel.onNavEvent(NavigationEvent.Navigate(Destination.HomePage))
+                    }
                 }
             ) {
                 Text(
@@ -248,11 +269,6 @@ fun SignupPage(navController: NavHostController, viewModel: SignUpViewModel = hi
                     fontWeight = FontWeight.Bold
                 )
             }
-
-
-
-
-
         }
     }
 }

@@ -5,5 +5,8 @@ data class LoginUiState (
     val password: String = "",
     val isRememberMe: Boolean = false,
     val isShowPassword: Boolean = false,
-    val navigationRoute: String? = null
+    val navigationRoute: String? = null,
+
+    val isLoggedIn: Boolean = false,
+    val authErrorString: String? = null
 )

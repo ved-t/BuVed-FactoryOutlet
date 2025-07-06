@@ -7,5 +7,8 @@ data class SignUpUiState (
     val confirmPassword: String = "",
 
     val isShowPassword: Boolean = false,
-    val isShowConfirmPassword: Boolean = false
+    val isShowConfirmPassword: Boolean = false,
+
+    val isLoggedIn: Boolean = false,
+    val authErrorString: String? = null
 )

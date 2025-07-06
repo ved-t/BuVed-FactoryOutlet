@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -43,8 +44,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.buved.R
 import com.example.buved.presentation.Destination
+import com.example.buved.presentation.event.home.NavigationEvent
 import com.example.buved.presentation.event.onboarding.LoginUiEvent
 import com.example.buved.presentation.ui.components.CircularImageIcon
+import com.example.buved.presentation.viewmodel.NavViewModel
 import com.example.buved.presentation.viewmodel.onboarding.LoginViewModel
 
 @Composable
@@ -52,6 +55,20 @@ fun LoginPage(navController: NavHostController, viewModel: LoginViewModel = hilt
 
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
+
+    val navViewModel: NavViewModel = hiltViewModel()
+
+    LaunchedEffect(Unit) {
+        navViewModel.navEvent.collect{event ->
+            when(event){
+                is NavigationEvent.Navigate -> {
+                    navController.navigate(event.destination.route)
+                }
+
+                NavigationEvent.PopBackStack -> navController.popBackStack()
+            }
+        }
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -196,7 +213,10 @@ fun LoginPage(navController: NavHostController, viewModel: LoginViewModel = hilt
                 modifier = Modifier
                     .fillMaxWidth(),
                 onClick ={
-                    navController.navigate(Destination.HomePage.route)
+                    viewModel.onEvent(LoginUiEvent.onLogin)
+                    if(uiState.isLoggedIn){
+                        navViewModel.onNavEvent(NavigationEvent.Navigate(Destination.HomePage))
+                    }
                 }
             ) {
                 Text(

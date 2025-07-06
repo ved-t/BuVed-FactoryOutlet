@@ -6,8 +6,14 @@ import com.example.buved.core.constants.Constants
 import com.example.buved.data.local.ProductIdDao
 import com.example.buved.data.local.ProductIdDatabase
 import com.example.buved.data.remote.FakeStoreApi
+import com.example.buved.data.repository.AuthRepositoryImpl
 import com.example.buved.data.repository.ProductRepositoryImpl
+import com.example.buved.domain.repository.AuthRepository
 import com.example.buved.domain.repository.ProductRepository
+import com.example.buved.domain.usecase.auth.IsUserLoggedInUseCase
+import com.example.buved.domain.usecase.auth.LoginUserUseCase
+import com.example.buved.domain.usecase.auth.LogoutUserUseCase
+import com.example.buved.domain.usecase.auth.RegisterUserUseCase
 import com.example.buved.domain.usecase.cart.DeleteCartItemUseCase
 import com.example.buved.domain.usecase.cart.GetAllCartItemsUseCase
 import com.example.buved.domain.usecase.cart.InsertCartItemUseCase
@@ -17,6 +23,9 @@ import com.example.buved.domain.usecase.productId.GetAllProductIdUseCase
 import com.example.buved.domain.usecase.fakestoreapi.GetProductsUseCase
 import com.example.buved.domain.usecase.fakestoreapi.GetSingleProductUseCase
 import com.example.buved.domain.usecase.productId.InsertProductIdUseCase
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -82,6 +91,24 @@ object AppModule {
         return ProductRepositoryImpl(api, productIdDao)
     }
 
+//    Auth repository
+    @Provides
+    fun provideAuthRepository(auth: FirebaseAuth): AuthRepository{
+        return AuthRepositoryImpl(auth)
+    }
+
+//    Auth use case providers
+    @Provides
+    fun provideRegisterUSerUseCase(authRepository: AuthRepository): RegisterUserUseCase = RegisterUserUseCase(authRepository)
+
+    @Provides
+    fun provideLoginUSerUseCase(authRepository: AuthRepository): LoginUserUseCase = LoginUserUseCase(authRepository)
+
+    @Provides
+    fun provideLogoutUSerUseCase(authRepository: AuthRepository): LogoutUserUseCase = LogoutUserUseCase(authRepository)
+
+    @Provides
+    fun provideIsUserLoggedInUseCase(authRepository: AuthRepository): IsUserLoggedInUseCase = IsUserLoggedInUseCase(authRepository)
 
 //    Api provider
     @Provides
@@ -91,5 +118,11 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(FakeStoreApi::class.java)
+    }
+
+//    Firebase providers
+    @Provides
+    fun provideFirebaseAuth(): FirebaseAuth{
+        return  Firebase.auth.also { it.useEmulator("192.168.1.6", 9099) }
     }
 }

@@ -12,11 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.buved.R
+import com.example.buved.presentation.ui.components.BadgedBoxIcon
 import com.example.buved.presentation.ui.components.CircularImageIcon
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CartTopAppBar(navController: NavController){
+fun CartTopAppBar(
+    navController: NavController,
+
+){
     CenterAlignedTopAppBar(
         title = { Text(text = "Cart") },
         navigationIcon = {

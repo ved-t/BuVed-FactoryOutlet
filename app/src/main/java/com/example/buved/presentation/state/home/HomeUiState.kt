@@ -11,5 +11,6 @@ data class HomeUiState(
     val list: List<Product> = emptyList(),
     val isLoading: Boolean = true,
 
-    val favouriteCount: String = "0"
+    val favouriteCount: String = "0",
+    val cartItemCount: String = "0"
 )

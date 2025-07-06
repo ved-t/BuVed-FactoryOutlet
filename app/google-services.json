@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "222464700753",
+    "project_id": "buved-3fd52",
+    "storage_bucket": "buved-3fd52.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:222464700753:android:86d10c64df8c886cc3a370",
+        "android_client_info": {
+          "package_name": "com.example.buved"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCZsx1DfjX2FzoO_FhmFkM7QExn5Qioy4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

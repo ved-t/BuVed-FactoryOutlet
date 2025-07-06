@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 @Composable
 fun MyBottomAppBar(
     onNavigate: () ->Unit,
+    cartItemCount: String,
 ){
     BottomAppBar() {
         NavigationBarItem(
@@ -27,7 +28,7 @@ fun MyBottomAppBar(
         )
 
         NavigationBarItem(
-            icon = { Icon(Icons.Outlined.ShoppingCart, contentDescription = "Cart Icon") },
+            icon = { BadgedBoxIcon(cartItemCount, onNavigate = onNavigate, Icons.Outlined.ShoppingCart, "Cart Icon") },
             selected = false,
             label = {
                 Text("Cart")

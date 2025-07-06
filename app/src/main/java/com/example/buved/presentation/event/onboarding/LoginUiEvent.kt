@@ -8,7 +8,7 @@ sealed class LoginUiEvent {
 
     data class navigate(val route: String): LoginUiEvent()
     data object onForgotPassword: LoginUiEvent()
-    data object onLogin: LoginUiEvent()
+    data object  onLogin: LoginUiEvent()
     data object onSignUp: LoginUiEvent()
 
 }

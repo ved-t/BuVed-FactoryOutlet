@@ -1,6 +1,7 @@
 package com.example.buved.presentation.ui.product_detail
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,6 +60,8 @@ fun ProductDetailScreen(
 
     val productId = productViewModel.productId
     val productUiState by productViewModel.productUiState.collectAsState()
+
+    val context = LocalContext.current
 
     Scaffold(
         modifier = Modifier,
@@ -106,6 +110,7 @@ fun ProductDetailScreen(
                     modifier = Modifier
                         .fillMaxWidth(),
                     onClick = {
+                        Toast.makeText(context, "Product Added to cart", Toast.LENGTH_SHORT).show()
                         productViewModel.onEvent(ProductUiEvent.onAddToCart(productUiState.product!!.id))
                     }
                 ) {

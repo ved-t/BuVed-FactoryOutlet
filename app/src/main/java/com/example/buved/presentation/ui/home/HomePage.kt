@@ -32,13 +32,17 @@ import com.example.buved.presentation.ui.components.MyBottomAppBar
 import com.example.buved.presentation.ui.components.MyTopAppBar
 import com.example.buved.presentation.ui.home.components.MoreOptions
 import com.example.buved.presentation.ui.home.components.ProductItem
+import com.example.buved.presentation.viewmodel.NavViewModel
+import com.example.buved.presentation.viewmodel.cart.CartViewModel
 import com.example.buved.presentation.viewmodel.home.HomeViewModel
 
 @Composable
-fun HomePage(navController: NavHostController, homeViewModel: HomeViewModel = hiltViewModel()) {
+fun HomePage(navController: NavHostController, homeViewModel: HomeViewModel = hiltViewModel(), cartViewModel: CartViewModel = hiltViewModel()) {
+
+    val navViewModel: NavViewModel = hiltViewModel()
 
     LaunchedEffect(Unit) {
-        homeViewModel.navEvent.collect{event ->
+        navViewModel.navEvent.collect{event ->
             when(event){
                 is NavigationEvent.Navigate -> {
                     navController.navigate(event.destination.route)
@@ -50,6 +54,7 @@ fun HomePage(navController: NavHostController, homeViewModel: HomeViewModel = hi
     }
 
     val uiState by homeViewModel.homeUiState.collectAsState()
+    val cartUiState by cartViewModel.uiState.collectAsState()
 
     Scaffold(
         modifier = Modifier,
@@ -57,15 +62,16 @@ fun HomePage(navController: NavHostController, homeViewModel: HomeViewModel = hi
             MyTopAppBar(
                 wishlistBadgeCount = uiState.favouriteCount,
                 onNavigate = {
-                    homeViewModel.onNavEvent(NavigationEvent.Navigate(Destination.WishListPage))
+                    navViewModel.onNavEvent(NavigationEvent.Navigate(Destination.WishListPage))
                 }
             )
         },
         bottomBar = {
             MyBottomAppBar(
                 onNavigate = {
-                    homeViewModel.onNavEvent(NavigationEvent.Navigate(Destination.CartPage))
-                }
+                    navViewModel.onNavEvent(NavigationEvent.Navigate(Destination.CartPage))
+                },
+                cartItemCount = cartUiState.totalUniqueItems.toString()
             )
         }
     ) { innerPadding ->
@@ -118,7 +124,7 @@ fun HomePage(navController: NavHostController, homeViewModel: HomeViewModel = hi
                                 )
                             },
                             onNavigate = {
-                                homeViewModel.onNavEvent(
+                                navViewModel.onNavEvent(
                                     NavigationEvent.Navigate(Destination.ProductDetailPage(product.id.toString()))
                                 )
                             }

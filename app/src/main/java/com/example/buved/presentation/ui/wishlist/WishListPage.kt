@@ -26,13 +26,17 @@ import com.example.buved.presentation.ui.components.MyBottomAppBar
 import com.example.buved.presentation.ui.components.MyTopAppBar
 import com.example.buved.presentation.ui.home.components.ProductItem
 import com.example.buved.presentation.ui.wishlist.components.WishlistTopAppBar
+import com.example.buved.presentation.viewmodel.cart.CartViewModel
 import com.example.buved.presentation.viewmodel.wishlist.WishlistViewModel
 
 @Composable
 fun WishListPage(
     navController: NavController,
-    viewModel: WishlistViewModel = hiltViewModel()
+    viewModel: WishlistViewModel = hiltViewModel(),
+    cartViewModel: CartViewModel = hiltViewModel()
 ){
+
+    val cartUiState by cartViewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.navEvent.collect{event ->
@@ -58,7 +62,8 @@ fun WishListPage(
             MyBottomAppBar(
                 onNavigate = {
                     viewModel.onNavEvent(NavigationEvent.Navigate(Destination.CartPage))
-                }
+                },
+                cartItemCount = cartUiState.totalUniqueItems.toString()
             )
         }
     ){innerPadding ->

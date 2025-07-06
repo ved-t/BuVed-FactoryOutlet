@@ -2,7 +2,10 @@ package com.example.buved.presentation
 
 import android.content.Context
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,18 +21,16 @@ import com.example.buved.presentation.ui.product_detail.ProductDetailScreen
 import com.example.buved.presentation.ui.wishlist.WishListPage
 
 @Composable
-fun Navigation(
-
-){
+fun Navigation(startViewModel: StartViewModel = hiltViewModel()){
     val context = LocalContext.current
     val sharedPrefs =context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
     val navController = rememberNavController()
 
-    val isLoggedIn = sharedPrefs.getBoolean("isLoggedIn", false)
+    val isLoggedIn by startViewModel.isUserLoggedIn.collectAsState()
 
-//    val startPage = if(isLoggedIn) Destination.HomePage.route else Destination.StartPage.route
+    val startPage = if(isLoggedIn) Destination.HomePage.route else Destination.StartPage.route
 
-    NavHost(navController, startDestination = Destination.HomePage.route) {
+    NavHost(navController, startDestination = startPage) {
         composable(Destination.StartPage.route){
             StartPage(navController)
         }

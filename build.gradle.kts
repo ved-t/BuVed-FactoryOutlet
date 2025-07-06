@@ -3,6 +3,7 @@
 buildscript {
     dependencies {
         classpath(libs.hilt.android.gradle.plugin)
+        classpath("com.google.gms:google-services:4.4.1")
     }
 }
 
@@ -14,4 +15,5 @@ plugins {
     id("com.google.firebase.crashlytics") version "3.0.3" apply false
     id("androidx.room") version "2.7.1" apply false
     id("com.google.dagger.hilt.android") version "2.56.1" apply false
+    id("com.google.gms.google-services") version "4.4.2" apply false
 }

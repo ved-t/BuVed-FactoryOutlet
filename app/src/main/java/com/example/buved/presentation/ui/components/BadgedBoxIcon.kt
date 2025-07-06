@@ -19,7 +19,6 @@ fun BadgedBoxIcon(badgeCount: String, onNavigate: () -> Unit, icon: ImageVector,
             Badge { Text(text = badgeCount) }
         },
         modifier = Modifier
-            .padding(vertical = 8.dp)
             .padding(end = 16.dp)
     ) {
         IconButton(onClick = onNavigate) {

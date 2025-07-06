@@ -8,4 +8,6 @@ sealed class SignupUiEvent{
 
     data object onShowPassword: SignupUiEvent()
     data object onShowConfirmPassword: SignupUiEvent()
+
+    data object onSIgnUp: SignupUiEvent()
 }
